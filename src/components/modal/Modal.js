@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import CONSTANTS from '../common/constants';
 
 export default class Modal {
@@ -33,13 +32,13 @@ export default class Modal {
     this.attachEvent();
   }
   attachEvent() {
-    $.subscribe('addResource', (e, data) => {
-      const currentAgent = data.target.closest('.agent-cell');
+    window.pubsub.subscribe('addResource', (data) => {
+      const currentAgent = data.detail.target.closest('.agent-cell');
       const agentIdentity = currentAgent.getAttribute('data-agentid');
-      const pos = this.calculatePos(data);
+      const pos = this.calculatePos(data.detail);
       this.showoModal(pos, agentIdentity);
     });
-    $.subscribe('addResourceDone', () => {
+    window.pubsub.subscribe('addResourceDone', () => {
       this.closeModal();
     });
     // this.element.on('click', '.modal-close-btn', () => {
@@ -70,7 +69,7 @@ export default class Modal {
       if(event.target && event.target.classList.contains('submit-add')){
         const resourceVal = event.target.closest('.modal-content').querySelector('.resource-input').value;
         if (this.isSourceValid(resourceVal)) {
-          $.publish('appendSource', resourceVal);
+          window.pubsub.publish('appendSource', resourceVal);
         } else {
           this.showModalError();
         }
@@ -94,8 +93,8 @@ export default class Modal {
     const _pos = {
       'position': 'absolute'
     }
-    _pos['left'] = _x + this.MODAL_OFFSET_LEFT;
-    _pos['top'] = _y + this.MODAL_OFFSET_TOP + _windowScroll;
+    _pos['left'] = _x + this.MODAL_OFFSET_LEFT + 'px';
+    _pos['top'] = _y + this.MODAL_OFFSET_TOP + _windowScroll + 'px';
     return _pos;
   }
   showoModal(position, bindId) {
@@ -107,7 +106,9 @@ export default class Modal {
       position = {};
     }
     this.displayOverlay(specifyStyle);
-    Object.assign(this.element.style, position);
+    for(let style in position) {
+      this.element.style[style] = position[style];
+    }
     this.element.setAttribute('data-bindid', bindId)
     this.element.style.display = 'block';
   }
@@ -123,7 +124,9 @@ export default class Modal {
     this.resourceInput.value = '';
   }
   displayOverlay(style) {
-    Object.assign(document.querySelector('.overlay'),style);
+    for (let item in style) {
+      document.querySelector('.overlay').style[item] = style[item];
+    }
     document.querySelector('.overlay').style.display = 'block';
   }
   closeOverlay() {

@@ -1,21 +1,26 @@
-import $ from 'jquery';
 import Container from './container/Containers';
-
 const AppScss = require('./styles/index.scss'); // eslint-disable-line no-unused-vars
-
-$(() => {
-  //Regeister the event publish/subscribe method
-  (function ($) {
-    var o = $({});
-    $.subscribe = function () {
-      o.on.apply(o, arguments);
+function init() {
+  window.pubsub = (doc => {
+    return {
+      publish: (type, detail) => doc.dispatchEvent(
+        new CustomEvent(type, {
+          detail: detail
+        })
+      ),
+      subscribe: (type, listener) => doc.addEventListener(
+        type, listener, 0
+      ),
+      unsubscribe: (type, listener) => doc.removeEventListener(
+        type, listener, 0
+      )
     };
-    $.unsubscribe = function () {
-      o.off.apply(o, arguments);
-    };
-    $.publish = function () {
-      o.trigger.apply(o, arguments);
-    };
-  }($));
+  })(document);
   new Container();
-});
+}
+
+if (document.readyState !== 'loading') {
+  init();
+} else {
+  document.addEventListener('DOMContentLoaded', init);
+}

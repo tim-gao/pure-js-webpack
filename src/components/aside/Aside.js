@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 export default class Aside {
   element = null
   tpl = `<aside>
@@ -25,46 +23,38 @@ export default class Aside {
     this.attachEvent();
   }
   attachEvent() {
-    // this.element.on('click', '.close-aside-menu', () => {
-    //   this.closeLeftMenu()
-    // });
-    this.element.addEventListener('click', (event)=>{
-      if(event.target && event.target.classList.contains('close-aside-menu')){
+    this.element.addEventListener('click', (event) => {
+      if (event.target && event.target.classList.contains('close-aside-menu')) {
         this.closeLeftMenu();
       }
     });
-    // this.element.on('click', '.menu-item', this.activeMenu);
-    this.element.addEventListener('click',(event)=>{
-      if(event.target && event.target.className  === 'menu-item'){
+    this.element.addEventListener('click', (event) => {
+      if (event.target && event.target.className === 'menu-item') {
         this.activeMenu(event.target);
       }
     });
-    $.subscribe('dataIsReady', (e, res) => {
-      this.renderHistory(res);
+    window.pubsub.subscribe('dataIsReady', (res) => {
+      this.renderHistory(res.detail);
     });
-    $.subscribe('closeSideMenu', () => {
+    window.pubsub.subscribe('closeSideMenu', () => {
       this.closeLeftMenu();
     });
-    $.subscribe('openSideMenu', () => {
+    window.pubsub.subscribe('openSideMenu', () => {
       this.openLeftMenu();
     });
   }
   activeMenu(target) {
-    Array.prototype.forEach.call(target.parentNode.children,(item)=>{
+    Array.prototype.forEach.call(target.parentNode.children, (item) => {
       item.classList.remove('active')
     })
     target.classList.add('active');
   }
   closeLeftMenu() {
-    // this.element.css('margin-left', '');
     this.element.style.marginLeft = '';
-    // $('.overlay').hide();
     document.getElementsByClassName('overlay')[0].style.display = 'none';
   }
   openLeftMenu() {
-    // this.element.css('margin-left', '0');
     this.element.style.marginLeft = 0;
-    // $('.overlay').show();
     document.getElementsByClassName('overlay')[0].style.display = 'block';
   }
   renderHistory(res) {

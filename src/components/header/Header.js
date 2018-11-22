@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 export default class Header {
   element = null
   tpl = `<header>
@@ -29,23 +27,19 @@ export default class Header {
     this.attachEvent();
   }
   attachEvent() {
-    // this.element.on('click', '.icon-navicon', this.openLeftMenu);
-    this.element.addEventListener('click',(event)=>{
-      if(event.target && event.target.classList.contains('icon-navicon')){
+    this.element.addEventListener('click', (event) => {
+      if (event.target && event.target.classList.contains('icon-navicon')) {
         this.openLeftMenu();
       }
     });
-    // this.element.on('click', '.profile-trigger', () => {
-    //   this.openProfileDropdown();
-    // });
-    this.element.addEventListener('click',(event)=>{
-      if(event.target && event.target.classList.contains('profile-trigger')){
+    this.element.addEventListener('click', (event) => {
+      if (event.target && event.target.classList.contains('profile-trigger')) {
         this.openProfileDropdown();
       }
     });
   }
   openLeftMenu() {
-    $.publish('openSideMenu');
+    window.pubsub.publish('openSideMenu');
   }
   openProfileDropdown() {
     this.profileDropdown.style.display = 'block';

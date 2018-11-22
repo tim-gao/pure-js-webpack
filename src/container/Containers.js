@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Header from '../components/header/Header';
 import Aside from '../components/aside/Aside';
 import Main from '../components/main/Main';
@@ -30,10 +29,9 @@ export default class Containers {
   cruiseDetailFetch(url) {
     new Service({
       'url': url,
-      'type': 'GET',
-      'success': (data) => {
-        $.publish('dataIsReady', data);
-      }
+      'type': 'GET'
+    }).then((data) => {
+      window.pubsub.publish('dataIsReady', data);
     });
   }
   renderComponents() {

@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 export default class Main {
   element = null
   maintpl =
@@ -137,62 +135,52 @@ export default class Main {
     return arr.join('');
   }
   updateCount() {
-    this.buildingCount.textContent = Array.prototype.filter.call(this.agentContainerEle.querySelectorAll('.agent-cell.is-building'),(item)=>{
+    this.buildingCount.textContent = Array.prototype.filter.call(this.agentContainerEle.querySelectorAll('.agent-cell.is-building'), (item) => {
       const style = window.getComputedStyle(item);
       return (style.visibility === 'visible')
     }).length;
-    this.idleCount.textContent = Array.prototype.filter.call(this.agentContainerEle.querySelectorAll('.agent-cell.is-idle'),(item)=>{
+    this.idleCount.textContent = Array.prototype.filter.call(this.agentContainerEle.querySelectorAll('.agent-cell.is-idle'), (item) => {
       const style = window.getComputedStyle(item);
       return (style.visibility === 'visible')
     }).length;
-    this.smryAll.textContent =this.agentContainerEle.querySelectorAll('.agent-cell').length;
-    this.smryPhysical.textContent =this.agentContainerEle.querySelectorAll('.agent-cell[data-env="physical"]').length;
-    this.smryVirtual.textContent =this.agentContainerEle.querySelectorAll('.agent-cell[data-env="virtual"]').length;
+    this.smryAll.textContent = this.agentContainerEle.querySelectorAll('.agent-cell').length;
+    this.smryPhysical.textContent = this.agentContainerEle.querySelectorAll('.agent-cell[data-env="physical"]').length;
+    this.smryVirtual.textContent = this.agentContainerEle.querySelectorAll('.agent-cell[data-env="virtual"]').length;
   }
   _attachEvent() {
-    // to show grid view or list view
-    // this.element.on('click', '.layout-btn-group .icon', this.toggerLayout);
-    this.element.addEventListener('click',(event) =>{
-      if(event.target.classList.contains('icon-th-card') || event.target.classList.contains('icon-th-list')) {
+    this.element.addEventListener('click', (event) => {
+      if (event.target.classList.contains('icon-th-card') || event.target.classList.contains('icon-th-list')) {
         this.toggerLayout(event.target);
       }
     });
-    // this.element.on('click', '.add-icon.icon-plus', (e) => {
-    //   $.publish('addResource', e);
-    // });
-    this.element.addEventListener('click',(event)=>{
-      if(event.target && event.target.className === 'add-icon icon-plus'){
-        $.publish('addResource', event);
+    this.element.addEventListener('click', (event) => {
+      if (event.target && event.target.className === 'add-icon icon-plus') {
+        window.pubsub.publish('addResource', event);
       }
     });
-    this.element.addEventListener('click',(event)=>{
-      if(event.target && event.target.className === 'icon-trash'){
+    this.element.addEventListener('click', (event) => {
+      if (event.target && event.target.className === 'icon-trash') {
         event.target.closest('.source-list').removeChild(event.target.parentNode);
       }
     });
-    $.subscribe('appendSource', (e, data) => {
-      this.appendNewSource(e, data);
+    window.pubsub.subscribe('appendSource', (data) => {
+      this.appendNewSource(data.detail);
     });
 
-    $.subscribe('dataIsReady', (e, data) => {
-      this.sucessCallback(data);
+    window.pubsub.subscribe('dataIsReady', (data) => {
+      this.sucessCallback(data.detail);
     });
-    // this.element.on('click', '.agent-tabs .tab-menu', (e) => {
-    //   this.changeEnvTab(e)
-    // });
-    this.element.addEventListener('click',(event)=>{
-      if(event.target && event.target.className === 'tab-menu'){
+    this.element.addEventListener('click', (event) => {
+      if (event.target && event.target.className === 'tab-menu') {
         this.changeEnvTab(event.target);
       }
     });
   }
   changeEnvTab(target) {
     const filter = target.getAttribute('data-tab-control');
-    Array.prototype.forEach.call(target.parentNode.children, (item)=>{
+    Array.prototype.forEach.call(target.parentNode.children, (item) => {
       item.classList.remove('active');
     });
-    // target.siblings().removeClass('active');
-    // target.addClass('active');
     target.classList.add('active');
 
     this.filterAgent(filter);
@@ -202,40 +190,31 @@ export default class Main {
   filterAgent(filter) {
     const agents = this.agentContainerEle.querySelectorAll('.agent-cell');
     if (filter === 'all') {
-      Array.prototype.forEach.call(agents, (item)=>{
+      Array.prototype.forEach.call(agents, (item) => {
         item.style.display = 'flex';
       });
       return;
     }
-    Array.prototype.map.call(agents, (v) =>{
-       const item = v
+    Array.prototype.map.call(agents, (v) => {
+      const item = v
       if (item.getAttribute('data-env') !== filter) {
         return item.style.display = 'none';
       } else {
         return item.style.display = 'flex';
       }
     });
-    // agents.map((i, v) => {
-    //   const item = $(v);
-    //   if (item.attr('data-env') !== filter) {
-    //     return item.hide();
-    //   } else {
-    //     return item.show();
-    //   }
-    // });
   }
   toggerLayout(target) {
-    const  layoutName = target.getAttribute('data-layout-name'),
+    const layoutName = target.getAttribute('data-layout-name'),
       agentContainre = document.querySelector('.agent-tab-content.is-active .agent-list');
-    Array.prototype.forEach.call(target.parentNode.children, (item)=>{
+    Array.prototype.forEach.call(target.parentNode.children, (item) => {
       item.classList.remove('active');
     });
-    // target.siblings().removeClass('active');
     target.classList.add('active');
     agentContainre.removeAttribute('data-layout');
     agentContainre.setAttribute('data-layout', layoutName + 'view');
   }
-  appendNewSource(e, source) {
+  appendNewSource(source) {
     const _data = source,
       _agentId = document.querySelector('.modal-add-resource').getAttribute('data-bindid'),
       sources = _data.split(',');
@@ -244,9 +223,9 @@ export default class Main {
     sources.forEach((source) => {
       sourceListHtml += `<span>${source}<i class="icon-trash"></i></span>`;
     });
-    document.querySelector(`.agent-cell[data-agentid=${_agentId}]`).querySelector('.source-list')
-      .innerHTML = sourceListHtml;
-    $.publish('addResourceDone');
+    document.querySelector('.agent-cell[data-agentid="' + _agentId + '"] .source-list')
+      .insertAdjacentHTML('beforeend', sourceListHtml);
+    window.pubsub.publish('addResourceDone');
   }
   render() {
     return this.element;

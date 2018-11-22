@@ -1,4 +1,3 @@
-
 export default class Footer {
   element = ''
   tpl = ` <footer>
