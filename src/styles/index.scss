@@ -1,0 +1,8 @@
+@import './variables',
+'./common';
+// component styles
+@import '../components/aside/aside',
+'../components/header/header',
+'../components/footer/footer',
+'../components/main/main',
+'../components/modal/modal';

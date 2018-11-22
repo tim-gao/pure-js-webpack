@@ -1,0 +1,95 @@
+aside {
+  background-color: $aside-background-color;
+  color: $white;
+  display: flex;
+  flex-flow: column nowrap;
+  position: fixed;
+  width: 260px;
+  margin-right: 20px;
+  height: 100%;
+
+  .icon-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: $light-blue;
+    z-index: 1000;
+    font-size: 18px;
+  }
+
+  .menu-tab {
+    padding-top: 80px;
+    flex-grow: 1;
+
+    .menu-item {
+      padding-left: 25px;
+      line-height: 45px;
+      height: 45px;
+      cursor: pointer;
+      color: #ccc;
+
+      &>i {
+        margin-right: 10px;
+        font-size: 20px;
+      }
+
+      &.active {
+        background: $menu-active-color;
+        color: $light-blue;
+      }
+    }
+  }
+
+  .history-list {
+    padding-left: 25px;
+    padding-bottom: 50px;
+
+    .history-list-title {
+      margin-left: -10px;
+      font-size: 20px;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding: 0 15px;
+
+      li {
+        font-size: 12px;
+        margin: 5px 0;
+        color: #999;
+      }
+    }
+  }
+
+  //desktop and desktop HD
+  @media screen and (min-width:1024px) {
+
+    .icon-navicon,
+    .icon-close {
+      display: none;
+    }
+  }
+
+  //tablet and mobile
+  @media screen and (max-width:1023px) {
+    z-index: 110;
+    margin-left: -100%;
+    width: 260px;
+    height: 100%;
+
+    .menu-tab {
+      padding-top: 60px;
+    }
+
+    .icon-close,
+    .icon-navicon {
+      display: block;
+    }
+
+    .history-list {
+      padding-bottom: 20px;
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "agentList": [{
+      "id": "10001",
+      "imageName": "windows.png",
+      "agentName": "bgttest1001.thoughtworks.com",
+      "status": "building",
+      "IP": "192.168.100.1",
+      "path": "/path/test/folder/agent",
+      "sources": [
+        "firefox", "chrome", "safari"
+      ],
+      "isDeny": true,
+      "env": "physical"
+    },
+    {
+      "id": "10002",
+      "imageName": "ubuntu.png",
+      "agentName": "bgttest1002.thoughtworks.com",
+      "status": "building",
+      "IP": "192.168.100.2",
+      "path": "/path/test/folder/agent",
+      "sources": [
+        "firefox", "chrome", "safari"
+      ],
+      "isDeny": true,
+      "env": "physical"
+    },
+    {
+      "id": "10003",
+      "imageName": "debin.png",
+      "agentName": "bgttest1003.thoughtworks.com",
+      "status": "idle",
+      "IP": "192.168.100.3",
+      "path": "/path/test/folder/agent",
+      "sources": [
+        "firefox", "chrome", "safari"
+      ],
+      "isDeny": false,
+      "env": "virtual"
+    },
+    {
+      "id": "10004",
+      "imageName": "debin.png",
+      "agentName": "bgttest1003.thoughtworks.com",
+      "status": "idle",
+      "IP": "192.168.100.4",
+      "path": "/path/test/folder/agent",
+      "sources": [
+        "firefox", "chrome", "safari"
+      ],
+      "isDeny": false,
+      "env": "physical"
+    },
+    {
+      "id": "10005",
+      "imageName": "debin.png",
+      "agentName": "bgttest1003.thoughtworks.com",
+      "status": "idle",
+      "IP": "192.168.100.5",
+      "path": "/path/test/folder/agent",
+      "sources": [
+        "firefox", "chrome", "safari"
+      ],
+      "isDeny": false,
+      "env": "virtual"
+    },
+    {
+      "id": "10006",
+      "imageName": "suse.png",
+      "agentName": "bgttest1003.thoughtworks.com",
+      "status": "building",
+      "IP": "192.168.100.6",
+      "path": "/path/test/folder/agent",
+      "sources": [
+        "firefox", "chrome", "safari"
+      ],
+      "isDeny": true,
+      "env": "physical"
+    },
+    {
+      "id": "10007",
+      "imageName": "suse.png",
+      "agentName": "bgttest1003.thoughtworks.com",
+      "status": "building",
+      "IP": "192.168.100.99",
+      "path": "/path/test/folder/agent",
+      "sources": [
+        "firefox", "chrome", "safari"
+      ],
+      "isDeny": true,
+      "env": "virtual"
+    }
+  ],
+  "history": [{
+      "path": "bgstmght01/Acceptance_test",
+      "time": ""
+    },
+    {
+      "path": "bgstmght02/Acceptance_test",
+      "time": ""
+    },
+    {
+      "path": "bgstmght03/Acceptance_test",
+      "time": ""
+    }, {
+      "path": "bgstmght04/Acceptance_test",
+      "time": ""
+    }, {
+      "path": "bgstmght05/Acceptance_test",
+      "time": ""
+    }, {
+      "path": "bgstmght06/Acceptance_test",
+      "time": ""
+    }, {
+      "path": "bgstmght07/Acceptance_test",
+      "time": ""
+    }, {
+      "path": "bgstmght08/Acceptance_test",
+      "time": ""
+    }, {
+      "path": "bgstmght09/Acceptance_test",
+      "time": ""
+    }, {
+      "path": "bgstmght10/Acceptance_test",
+      "time": ""
+    }
+  ]
+}

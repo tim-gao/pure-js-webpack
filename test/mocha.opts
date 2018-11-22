@@ -1,0 +1,4 @@
+test
+--compilers js:babel-core/register
+--reporter spec
+--recursive

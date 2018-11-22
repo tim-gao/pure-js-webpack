@@ -1,0 +1,94 @@
+.modal-add-resource {
+  display: none;
+  position: fixed;
+  width: 570px;
+  background-color: #fff;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .5);
+  padding: 5px 15px 15px 15px;
+  border: 1px solid $light-blue;
+  box-sizing: border-box;
+  z-index: 110;
+
+  &:before {
+    content: '';
+    border-style: solid;
+    border-width: 12px;
+    border-color: transparent transparent $light-blue transparent;
+    position: absolute;
+    top: -24px;
+  }
+
+  &:after {
+    content: '';
+    border-style: solid;
+    border-width: 12px;
+    border-color: transparent transparent $white transparent;
+    position: absolute;
+    top: -23px;
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 18px;
+    color: $light-blue;
+  }
+
+  .modal-content {
+    position: relative;
+
+    .error {
+      color: $red;
+      display: none;
+    }
+
+    >p {
+      margin-bottom: 8px;
+    }
+
+    .resource-input {
+      width: 100%;
+      line-height: 25px;
+      height: 25px;
+      margin-bottom: 15px;
+      text-indent: 8px;
+      border: 1px solid $dark-grey;
+    }
+
+    .submit-add {
+      margin-right: 15px;
+    }
+  }
+
+  //mobile 
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 60px);
+    left: 50% !important;
+    top: auto;
+    bottom: 40px;
+    transform: translate3d(-50%, 0, 0) !important;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  //tablet
+  @media screen and (min-width: 768px) and (max-width:1023px) {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate3d(-50%, -50%, 0) !important;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  //desktop
+  @media screen and (min-width1024px) {
+    position: absolute;
+  }
+}
